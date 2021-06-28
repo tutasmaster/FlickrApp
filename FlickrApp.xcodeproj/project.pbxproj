@@ -18,6 +18,7 @@
 		F204FEA9268A0508007B5764 /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204FEA8268A0508007B5764 /* FlickrResponse.swift */; };
 		F204FEAB268A0E27007B5764 /* api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = F204FEAA268A0E27007B5764 /* api_key.txt */; };
 		F204FEAD268A0EFE007B5764 /* FlickrFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F204FEAC268A0EFE007B5764 /* FlickrFunctions.swift */; };
+		F204FEAF268A1CCD007B5764 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F204FEAE268A1CCD007B5764 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		F204FEA8268A0508007B5764 /* FlickrResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrResponse.swift; sourceTree = "<group>"; };
 		F204FEAA268A0E27007B5764 /* api_key.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = api_key.txt; path = ../../../../Downloads/api_key.txt; sourceTree = "<group>"; };
 		F204FEAC268A0EFE007B5764 /* FlickrFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrFunctions.swift; sourceTree = "<group>"; };
+		F204FEAE268A1CCD007B5764 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		F204FE6C2689FED5007B5764 = {
 			isa = PBXGroup;
 			children = (
+				F204FEAE268A1CCD007B5764 /* .gitignore */,
 				F204FE772689FED5007B5764 /* FlickrApp */,
 				F204FE8E2689FED7007B5764 /* FlickrAppTests */,
 				F204FE992689FED7007B5764 /* FlickrAppUITests */,
@@ -240,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F204FEAF268A1CCD007B5764 /* .gitignore in Resources */,
 				F204FE852689FED7007B5764 /* LaunchScreen.storyboard in Resources */,
 				F204FE822689FED7007B5764 /* Assets.xcassets in Resources */,
 				F204FE802689FED5007B5764 /* Main.storyboard in Resources */,
