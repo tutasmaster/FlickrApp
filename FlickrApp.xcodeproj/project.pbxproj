@@ -57,6 +57,7 @@
 		F204FEAA268A0E27007B5764 /* api_key.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = api_key.txt; path = ../../../../Downloads/api_key.txt; sourceTree = "<group>"; };
 		F204FEAC268A0EFE007B5764 /* FlickrFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrFunctions.swift; sourceTree = "<group>"; };
 		F204FEAE268A1CCD007B5764 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F204FEB0268A1D22007B5764 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +88,7 @@
 		F204FE6C2689FED5007B5764 = {
 			isa = PBXGroup;
 			children = (
+				F204FEB0268A1D22007B5764 /* README.md */,
 				F204FEAE268A1CCD007B5764 /* .gitignore */,
 				F204FE772689FED5007B5764 /* FlickrApp */,
 				F204FE8E2689FED7007B5764 /* FlickrAppTests */,
