@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var images : [UIImage] = []
+    var images : [Image] = []
     var imageCount = 0
     var currentImage = 0
     
@@ -25,20 +25,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         getFlickrPhotoSearchResponse(){
             response in
             guard let response = response else { return }
-
-            
-            self.imageCount = response.photos.photo.count
-            
-            self.currentImage = 0
             for page in response.photos.photo{
                 print(page.id)
-                getFlickrPhotoData(id: page.id){
+                var image = Image(id: page.id, data: nil)
+                getFlickrPhotoData(id: page.id, label: "Large Square"){
                     response in
                     guard let response = response else {
                         print("No photo data found for " + page.id)
                         return }
                     print("Photo data found for " + page.id)
-                    self.images.append(response)
+                    image.data = response
+                    self.images.append(image)
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }
@@ -48,15 +45,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageCount
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        if(indexPath.item < images.count){
-            
-            cell.imageView.image = images[indexPath.item]
-        }
+        cell.imageView.image = images[indexPath.item].data
         return cell
     }
 }

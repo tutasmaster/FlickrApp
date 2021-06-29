@@ -35,7 +35,7 @@ func getImageSizesURL(id : String) -> URL{
     return URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + apiKey! + "&photo_id=" + id + "&format=json&nojsoncallback=1")!
 }
 
-func getImageDataURL(id : String, finished: @escaping(_ response: URL?) -> ()){
+func getImageSizes(id : String, finished: @escaping(_ response: FlickrPhotoGetSizesResponse?) -> ()){
     URLSession.shared.dataTask(with: getImageSizesURL(id: id), completionHandler: {
         data, response, error in
         guard let data = data else {
@@ -45,7 +45,7 @@ func getImageDataURL(id : String, finished: @escaping(_ response: URL?) -> ()){
         let jsonDecoder = JSONDecoder()
         do{
             let parsedJSON = try jsonDecoder.decode(FlickrPhotoGetSizesResponse.self, from: data)
-            finished(URL(string: parsedJSON.sizes.size[1].source))
+            finished(parsedJSON)
         }catch{
             finished(nil)
         }
@@ -70,15 +70,29 @@ func getFlickrPhotoSearchResponse(finished: @escaping(_ response: FlickrPhotoSea
     }).resume()
 }
 
-func getFlickrPhotoData(id: String, finished: @escaping(_ response: UIImage?) -> ()){
-    getImageDataURL(id: id){
-        url in
+func findPhotoURLFromLabel(response: FlickrPhotoGetSizesResponse, label: String) -> URL?{
+    for size in response.sizes.size{
+        print(size.label)
+        if size.label == label {
+            return URL(string: size.source)
+        }
+    }
+    return nil
+}
+
+func getFlickrPhotoData(id: String, label: String, finished: @escaping(_ response: UIImage?) -> ()){
+    getImageSizes(id: id){
+        response in
         
-        if url == nil {
+        if response == nil {
             print(id)
         }
-        print(url!.absoluteString)
-        URLSession.shared.dataTask(with: url!, completionHandler: {
+        guard let photoURL = findPhotoURLFromLabel(response: response!, label: label) else {
+            finished(nil)
+            return
+        }
+        print(photoURL.absoluteString)
+        URLSession.shared.dataTask(with: photoURL, completionHandler: {
             data, response, error in
             guard let data = data, error == nil else {
                 print("Photo Data task has returned with no data.")
