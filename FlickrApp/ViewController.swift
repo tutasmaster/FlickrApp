@@ -53,4 +53,58 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.imageView.image = images[indexPath.item].data
         return cell
     }
+    @objc func dismissFullscreenImage(sender: UITapGestureRecognizer){
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+    @IBAction func handleTap(_ sender: UITapGestureRecognizer) {
+        print("tap")
+        print(sender.view!)
+        if let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)){
+            let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+            let imageView = cell.imageView!
+            let newImageView = UIImageView(image: imageView.image)
+            newImageView.translatesAutoresizingMaskIntoConstraints = false
+            let constraints = [
+                newImageView.topAnchor.constraint(equalTo: view.topAnchor),
+                newImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                newImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                newImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
+            newImageView.backgroundColor = .black
+            newImageView.contentMode = .scaleAspectFit
+            newImageView.isUserInteractionEnabled = true
+            var tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissFullscreenImage(sender:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            newImageView.addGestureRecognizer(tap)
+            self.view.addSubview(newImageView)
+            self.navigationController?.isNavigationBarHidden = true
+            self.tabBarController?.tabBar.isHidden = true
+            NSLayoutConstraint.activate(constraints)
+            
+            getFlickrPhotoData(id: images[indexPath.item].id, label: "Large"){
+                response in
+                guard let response = response else {
+                    return }
+                DispatchQueue.main.async {
+                    newImageView.image = response
+                }
+            }
+        }
+        /*let imageView = sender.view as! UIImageView
+         let newImageView = UIImageView(image: imageView.image)
+         newImageView.frame = UIScreen.main.bounds
+         newImageView.backgroundColor = .black
+         newImageView.contentMode = .scaleAspectFill
+         newImageView.isUserInteractionEnabled = true
+        var tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissFullscreenImage(sender:)))
+        tap.numberOfTapsRequired = 1
+        tap.numberOfTouchesRequired = 1
+         newImageView.addGestureRecognizer(tap)
+         self.view.addSubview(newImageView)
+         self.navigationController?.isNavigationBarHidden = true
+         self.tabBarController?.tabBar.isHidden = true*/
+    }
 }

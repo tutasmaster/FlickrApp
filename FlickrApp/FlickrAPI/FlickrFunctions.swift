@@ -84,10 +84,12 @@ func getFlickrPhotoData(id: String, label: String, finished: @escaping(_ respons
     getImageSizes(id: id){
         response in
         
-        if response == nil {
+        guard let response = response else {
             print(id)
+            finished(nil)
+            return
         }
-        guard let photoURL = findPhotoURLFromLabel(response: response!, label: label) else {
+        guard let photoURL = findPhotoURLFromLabel(response: response, label: label) else {
             finished(nil)
             return
         }
