@@ -20,7 +20,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2Px-PO-OlK">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="h3D-yr-mYq">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="h3D-yr-mYq">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -34,8 +34,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N6n-yr-FcO">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="N6n-yr-FcO">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <gestureRecognizers/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -45,16 +46,6 @@
                                                 </imageView>
                                             </subviews>
                                             <gestureRecognizers/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="N6n-yr-FcO" secondAttribute="trailing" id="Dl9-dO-a6N"/>
-                                                <constraint firstItem="N6n-yr-FcO" firstAttribute="top" secondItem="PDg-4U-N3U" secondAttribute="top" id="FE0-jL-Vfq"/>
-                                                <constraint firstAttribute="bottom" secondItem="N6n-yr-FcO" secondAttribute="bottom" id="ONO-yx-VF0"/>
-                                                <constraint firstItem="N6n-yr-FcO" firstAttribute="top" secondItem="PDg-4U-N3U" secondAttribute="top" id="OTI-TE-vIg"/>
-                                                <constraint firstItem="N6n-yr-FcO" firstAttribute="leading" secondItem="PDg-4U-N3U" secondAttribute="leading" id="acd-yr-h30"/>
-                                                <constraint firstAttribute="trailing" secondItem="N6n-yr-FcO" secondAttribute="trailing" id="jaq-SQ-Vg0"/>
-                                                <constraint firstAttribute="bottom" secondItem="N6n-yr-FcO" secondAttribute="bottom" id="kWa-Uu-lCt"/>
-                                                <constraint firstItem="N6n-yr-FcO" firstAttribute="leading" secondItem="PDg-4U-N3U" secondAttribute="leading" id="zUR-es-2iS"/>
-                                            </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="imageView" destination="N6n-yr-FcO" id="QQy-sK-21s"/>
