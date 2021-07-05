@@ -13,16 +13,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var images : [Image] = []
     var imageCount = 0
     var currentImage = 0
+    var isLoading = true
+    var page = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        loadImages()
+        loadImages(page: page)
     }
 
-    func loadImages() {
-        getFlickrPhotoSearchResponse(){
+    func loadImages(page: Int) {
+        isLoading = true
+        getFlickrPhotoSearchResponse(page: page){
             response in
             guard let response = response else { return }
             for page in response.photos.photo{
@@ -38,6 +41,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.images.append(image)
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.isLoading = false
+                        self.page+=1
                     }
                 }
             }
@@ -46,6 +51,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == images.count - 10 && !self.isLoading {
+            loadImages(page: page)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,18 +104,5 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
             }
         }
-        /*let imageView = sender.view as! UIImageView
-         let newImageView = UIImageView(image: imageView.image)
-         newImageView.frame = UIScreen.main.bounds
-         newImageView.backgroundColor = .black
-         newImageView.contentMode = .scaleAspectFill
-         newImageView.isUserInteractionEnabled = true
-        var tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissFullscreenImage(sender:)))
-        tap.numberOfTapsRequired = 1
-        tap.numberOfTouchesRequired = 1
-         newImageView.addGestureRecognizer(tap)
-         self.view.addSubview(newImageView)
-         self.navigationController?.isNavigationBarHidden = true
-         self.tabBarController?.tabBar.isHidden = true*/
     }
 }

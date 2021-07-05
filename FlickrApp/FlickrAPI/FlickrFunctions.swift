@@ -21,11 +21,11 @@ func loadApiKey(){
     }
 }
 
-func getSearchURL() -> URL{
+func getSearchURL(page: Int) -> URL{
     if(apiKey == nil){
         loadApiKey()
     }
-    return URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + apiKey! + "&tags=bird&page=1&format=json&nojsoncallback=1")!
+    return URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + apiKey! + "&tags=bird&page=" + String(page) + "&format=json&nojsoncallback=1")!
 }
 
 func getImageSizesURL(id : String) -> URL{
@@ -52,8 +52,8 @@ func getImageSizes(id : String, finished: @escaping(_ response: FlickrPhotoGetSi
     }).resume()
 }
 
-func getFlickrPhotoSearchResponse(finished: @escaping(_ response: FlickrPhotoSearchResponse?) -> ()){
-    let url = getSearchURL()
+func getFlickrPhotoSearchResponse(page: Int, finished: @escaping(_ response: FlickrPhotoSearchResponse?) -> ()){
+    let url = getSearchURL(page: page)
     URLSession.shared.dataTask(with: url, completionHandler: {
         data, response, error in
         guard let data = data else {
