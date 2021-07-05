@@ -8,6 +8,12 @@
 import Foundation
 import UIKit
 
+private var session: URLSession = {
+    let configuration = URLSessionConfiguration.default
+    configuration.requestCachePolicy = .returnCacheDataElseLoad
+    return URLSession(configuration: configuration)
+}()
+
 func loadApiKey(){
     if let filepath = Bundle.main.path(forResource: "api_key", ofType: "txt"){
         do {
@@ -36,7 +42,7 @@ func getImageSizesURL(id : String) -> URL{
 }
 
 func getImageSizes(id : String, finished: @escaping(_ response: FlickrPhotoGetSizesResponse?) -> ()){
-    URLSession.shared.dataTask(with: getImageSizesURL(id: id), completionHandler: {
+    session.dataTask(with: getImageSizesURL(id: id), completionHandler: {
         data, response, error in
         guard let data = data else {
             print("Image URL returned no data.")
@@ -54,7 +60,7 @@ func getImageSizes(id : String, finished: @escaping(_ response: FlickrPhotoGetSi
 
 func getFlickrPhotoSearchResponse(page: Int, finished: @escaping(_ response: FlickrPhotoSearchResponse?) -> ()){
     let url = getSearchURL(page: page)
-    URLSession.shared.dataTask(with: url, completionHandler: {
+    session.dataTask(with: url, completionHandler: {
         data, response, error in
         guard let data = data else {
             print("Photo Search task has returned no data.")
@@ -94,7 +100,7 @@ func getFlickrPhotoData(id: String, label: String, finished: @escaping(_ respons
             return
         }
         print(photoURL.absoluteString)
-        URLSession.shared.dataTask(with: photoURL, completionHandler: {
+        session.dataTask(with: photoURL, completionHandler: {
             data, response, error in
             guard let data = data, error == nil else {
                 print("Photo Data task has returned with no data.")

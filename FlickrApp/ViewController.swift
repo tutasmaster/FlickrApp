@@ -15,7 +15,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var currentImage = 0
     var isLoading = true
     var page = 1
-    
+    var itemCount = 0
+    var totalItemCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -28,11 +29,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         getFlickrPhotoSearchResponse(page: page){
             response in
             guard let response = response else { return }
+            self.totalItemCount+=response.photos.photo.count
             for page in response.photos.photo{
                 print(page.id)
                 var image = Image(id: page.id, data: nil)
                 getFlickrPhotoData(id: page.id, label: "Large Square"){
                     response in
+                    self.itemCount+=1
+                    if self.itemCount == self.totalItemCount - 1{
+                        self.isLoading = false
+                        self.page+=1
+                    }
                     guard let response = response else {
                         print("No photo data found for " + page.id)
                         return }
@@ -41,8 +48,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.images.append(image)
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
-                        self.isLoading = false
-                        self.page+=1
                     }
                 }
             }
@@ -54,7 +59,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == images.count - 10 && !self.isLoading {
+        if indexPath.row == images.count - 20 && !self.isLoading {
             loadImages(page: page)
         }
     }
